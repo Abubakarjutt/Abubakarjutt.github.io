@@ -1,0 +1,13 @@
+# graft's local graph cache — regenerable, not committed (run `graft build`).
+/graft/
+
+# Private or internal files: never publish.
+Profile (1).pdf
+*.pdf
+.DS_Store
+.claude/
+.impeccable/
+PRODUCT.md
+DESIGN.md
+AGENTS.md
+.ignore

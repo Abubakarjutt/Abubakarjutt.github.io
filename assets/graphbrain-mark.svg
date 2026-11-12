@@ -1,0 +1,48 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Graphbrain - open-source private knowledge graph with a network visual">
+<defs><radialGradient id="gb-bg" cx="50%" cy="38%" r="72%"><stop offset="0%" stop-color="#15151b"/><stop offset="100%" stop-color="#0c0c0e"/></radialGradient><radialGradient id="gb-glow" cx="50%" cy="50%" r="62%"><stop offset="0%" stop-color="#c8a97e" stop-opacity="0.16"/><stop offset="100%" stop-color="#c8a97e" stop-opacity="0"/></radialGradient><radialGradient id="gb-hub" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#d4b58c"/><stop offset="100%" stop-color="#c8a97e"/></radialGradient></defs>
+<rect width="1600" height="900" fill="url(#gb-bg)"/>
+<rect width="1600" height="900" fill="url(#gb-glow)"/>
+<line x1="800" y1="452" x2="858" y2="273" stroke="#f4f1ea" stroke-opacity="0.16" stroke-width="1.2"/>
+<line x1="800" y1="452" x2="984" y2="413" stroke="#f4f1ea" stroke-opacity="0.16" stroke-width="1.2"/>
+<line x1="800" y1="452" x2="926" y2="592" stroke="#f4f1ea" stroke-opacity="0.16" stroke-width="1.2"/>
+<line x1="800" y1="452" x2="742" y2="631" stroke="#f4f1ea" stroke-opacity="0.16" stroke-width="1.2"/>
+<line x1="800" y1="452" x2="616" y2="491" stroke="#f4f1ea" stroke-opacity="0.16" stroke-width="1.2"/>
+<line x1="800" y1="452" x2="674" y2="312" stroke="#f4f1ea" stroke-opacity="0.16" stroke-width="1.2"/>
+<line x1="858" y1="273" x2="800" y2="100" stroke="#f4f1ea" stroke-opacity="0.16" stroke-width="1.2"/>
+<line x1="858" y1="273" x2="1049" y2="203" stroke="#a8a29a" stroke-opacity="0.10" stroke-width="1"/>
+<line x1="984" y1="413" x2="1152" y2="452" stroke="#f4f1ea" stroke-opacity="0.16" stroke-width="1.2"/>
+<line x1="926" y1="592" x2="800" y2="804" stroke="#f4f1ea" stroke-opacity="0.16" stroke-width="1.2"/>
+<line x1="926" y1="592" x2="551" y2="701" stroke="#a8a29a" stroke-opacity="0.10" stroke-width="1"/>
+<line x1="742" y1="631" x2="448" y2="452" stroke="#f4f1ea" stroke-opacity="0.16" stroke-width="1.2"/>
+<line x1="616" y1="491" x2="800" y2="100" stroke="#f4f1ea" stroke-opacity="0.16" stroke-width="1.2"/>
+<line x1="616" y1="491" x2="1049" y2="203" stroke="#a8a29a" stroke-opacity="0.10" stroke-width="1"/>
+<line x1="674" y1="312" x2="1152" y2="452" stroke="#f4f1ea" stroke-opacity="0.16" stroke-width="1.2"/>
+<line x1="800" y1="100" x2="1049" y2="203" stroke="#a8a29a" stroke-opacity="0.10" stroke-width="1"/>
+<line x1="1049" y1="701" x2="800" y2="804" stroke="#a8a29a" stroke-opacity="0.10" stroke-width="1"/>
+<line x1="448" y1="452" x2="551" y2="203" stroke="#a8a29a" stroke-opacity="0.10" stroke-width="1"/>
+<line x1="742" y1="631" x2="800" y2="804" stroke="#c8a97e" stroke-opacity="0.5" stroke-width="1.4"/>
+<line x1="984" y1="413" x2="1152" y2="452" stroke="#c8a97e" stroke-opacity="0.5" stroke-width="1.4"/>
+<line x1="800" y1="452" x2="984" y2="413" stroke="#c8a97e" stroke-opacity="0.5" stroke-width="1.4"/>
+<line x1="800" y1="452" x2="742" y2="631" stroke="#c8a97e" stroke-opacity="0.5" stroke-width="1.4"/>
+<text x="876.0951949424901" y="278.2013749365111" text-anchor="start" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="15" letter-spacing="1" fill="#a8a29a" fill-opacity="0.85">note</text>
+<text x="943.7965539954654" y="596.7112271897502" text-anchor="start" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="15" letter-spacing="1" fill="#a8a29a" fill-opacity="0.85">repo</text>
+<text x="598.1082510620445" y="496.0873978737387" text-anchor="end" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="15" letter-spacing="1" fill="#a8a29a" fill-opacity="0.85">person</text>
+<text x="782.0" y="809.0" text-anchor="end" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="15" letter-spacing="1" fill="#a8a29a" fill-opacity="0.85">query</text>
+<circle cx="800" cy="452" r="34" fill="#c8a97e" fill-opacity="0.10"/>
+<circle cx="800" cy="452" r="16" fill="url(#gb-hub)"/>
+<circle cx="858" cy="273" r="8" fill="#c8a97e" fill-opacity="0.95"/>
+<circle cx="984" cy="413" r="9" fill="#c8a97e" fill-opacity="0.95"/>
+<circle cx="926" cy="592" r="10" fill="#c8a97e" fill-opacity="0.95"/>
+<circle cx="742" cy="631" r="8" fill="#c8a97e" fill-opacity="0.95"/>
+<circle cx="616" cy="491" r="9" fill="#c8a97e" fill-opacity="0.95"/>
+<circle cx="674" cy="312" r="10" fill="#c8a97e" fill-opacity="0.95"/>
+<circle cx="800" cy="100" r="5" fill="#a8a29a" fill-opacity="0.6"/>
+<circle cx="1049" cy="203" r="6" fill="#a8a29a" fill-opacity="0.6"/>
+<circle cx="1152" cy="452" r="5" fill="#a8a29a" fill-opacity="0.6"/>
+<circle cx="1049" cy="701" r="6" fill="#a8a29a" fill-opacity="0.6"/>
+<circle cx="800" cy="804" r="5" fill="#a8a29a" fill-opacity="0.6"/>
+<circle cx="551" cy="701" r="6" fill="#a8a29a" fill-opacity="0.6"/>
+<circle cx="448" cy="452" r="5" fill="#a8a29a" fill-opacity="0.6"/>
+<circle cx="551" cy="203" r="6" fill="#a8a29a" fill-opacity="0.6"/>
+<text x="120" y="150" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="15" letter-spacing="3" fill="#a8a29a" fill-opacity="0.7">PRIVATE KNOWLEDGE GRAPH</text>
+</svg>

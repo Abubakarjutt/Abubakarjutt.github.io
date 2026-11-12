@@ -1,0 +1,26 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trivio - open-source AI accounting platform with a balanced double-entry ledger visual">
+<defs><radialGradient id="tv-bg" cx="30%" cy="8%" r="85%"><stop offset="0%" stop-color="#15151b"/><stop offset="55%" stop-color="#0e0e12"/><stop offset="100%" stop-color="#0c0c0e"/></radialGradient><radialGradient id="tv-glow" cx="84%" cy="112%" r="72%"><stop offset="0%" stop-color="#c8a97e" stop-opacity="0.13"/><stop offset="100%" stop-color="#c8a97e" stop-opacity="0"/></radialGradient><filter id="tv-shadow" x="-25%" y="-25%" width="150%" height="160%"><feDropShadow dx="0" dy="34" stdDeviation="46" flood-color="#000000" flood-opacity="0.55"/></filter></defs>
+<rect width="1600" height="900" fill="url(#tv-bg)"/>
+<rect width="1600" height="900" fill="url(#tv-glow)"/>
+<g filter="url(#tv-shadow)">
+<rect x="300" y="168" width="1000" height="564" rx="26" fill="#17171c" stroke="#f4f1ea" stroke-opacity="0.09"/>
+<line x1="326" y1="168.5" x2="1274" y2="168.5" stroke="#f4f1ea" stroke-opacity="0.10"/>
+</g>
+<text x="360" y="232" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="600" letter-spacing="3" fill="#a8a29a">GENERAL LEDGER</text>
+<rect x="1108" y="214" width="132" height="34" rx="17" fill="#c8a97e" fill-opacity="0.12" stroke="#c8a97e" stroke-opacity="0.35"/>
+<text x="1174.0" y="236" text-anchor="middle" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#c8a97e">BALANCED</text>
+<line x1="360" y1="280" x2="1240" y2="280" stroke="#f4f1ea" stroke-opacity="0.08"/>
+<circle cx="366" cy="346" r="5" fill="#c8a97e"/>
+<text x="390" y="352" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="22" font-weight="500" fill="#f4f1ea">Invoice #0042 · Receivables</text>
+<text x="1240" y="352" text-anchor="end" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="22" font-weight="600" fill="#c8a97e">+2,480.00</text>
+<circle cx="366" cy="436" r="5" fill="#a8a29a"/>
+<text x="390" y="442" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="22" font-weight="500" fill="#f4f1ea">Rent · Payables</text>
+<text x="1240" y="442" text-anchor="end" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="22" font-weight="600" fill="#a8a29a">−960.00</text>
+<circle cx="366" cy="526" r="5" fill="#a8a29a"/>
+<text x="390" y="532" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="22" font-weight="500" fill="#f4f1ea">Owner draw · Equity</text>
+<text x="1240" y="532" text-anchor="end" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="22" font-weight="600" fill="#a8a29a">−1,520.00</text>
+<line x1="360" y1="600" x2="1240" y2="600" stroke="#f4f1ea" stroke-opacity="0.08"/>
+<text x="360" y="656" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="15" letter-spacing="1" fill="#a8a29a">Net balance</text>
+<text x="1240" y="662" text-anchor="end" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="26" font-weight="600" fill="#f4f1ea">0.00</text>
+<text x="360" y="694" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="13" fill="#a8a29a" fill-opacity="0.75">Privacy-first · on-device AI</text>
+</svg>

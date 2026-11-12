@@ -1,0 +1,56 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TrackIt - voice-first iOS workout logger with a waveform visual">
+<defs><radialGradient id="tk-bg" cx="50%" cy="6%" r="75%"><stop offset="0%" stop-color="#15151b"/><stop offset="100%" stop-color="#0c0c0e"/></radialGradient><linearGradient id="tk-bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d4b58c"/><stop offset="100%" stop-color="#c8a97e"/></linearGradient></defs>
+<rect width="1600" height="900" fill="url(#tk-bg)"/>
+<g stroke="#c8a97e" stroke-opacity="0.55" fill="none" stroke-width="2.4" stroke-linecap="round">
+<rect x="787" y="292" width="26" height="52" rx="13" fill="#c8a97e" fill-opacity="0.12"/>
+<line x1="800" y1="352" x2="800" y2="372"/>
+<line x1="778" y1="372" x2="822" y2="372"/>
+</g>
+<circle cx="800" cy="318" r="4" fill="#c8a97e" fill-opacity="0.9"/>
+<line x1="330" y1="486" x2="1270" y2="486" stroke="#f4f1ea" stroke-opacity="0.08"/>
+<rect x="330.0" y="477.0" width="9" height="18.0" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.55"/>
+<rect x="351.9" y="459.5" width="9" height="53.0" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.63"/>
+<rect x="373.7" y="450.4" width="9" height="71.2" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.68"/>
+<rect x="395.6" y="446.7" width="9" height="78.7" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.71"/>
+<rect x="417.4" y="434.0" width="9" height="103.9" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.74"/>
+<rect x="439.3" y="441.5" width="9" height="89.1" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.77"/>
+<rect x="461.2" y="420.7" width="9" height="130.6" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.79"/>
+<rect x="483.0" y="441.1" width="9" height="89.8" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.81"/>
+<rect x="504.9" y="410.6" width="9" height="150.9" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.83"/>
+<rect x="526.7" y="432.0" width="9" height="107.9" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.85"/>
+<rect x="548.6" y="404.2" width="9" height="163.6" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.86"/>
+<rect x="570.5" y="418.8" width="9" height="134.4" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.88"/>
+<rect x="592.3" y="401.8" width="9" height="168.3" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.89"/>
+<rect x="614.2" y="406.3" width="9" height="159.5" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.90"/>
+<rect x="636.0" y="403.5" width="9" height="165.0" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.91"/>
+<rect x="657.9" y="395.5" width="9" height="181.0" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.92"/>
+<rect x="679.8" y="408.7" width="9" height="154.6" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.93"/>
+<rect x="701.6" y="387.5" width="9" height="196.9" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.94"/>
+<rect x="723.5" y="416.8" width="9" height="138.4" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.94"/>
+<rect x="745.3" y="383.1" width="9" height="205.8" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.95"/>
+<rect x="767.2" y="423.1" width="9" height="125.7" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.95"/>
+<rect x="789.1" y="382.7" width="9" height="206.7" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.95"/>
+<rect x="810.9" y="412.1" width="9" height="147.8" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.95"/>
+<rect x="832.8" y="386.2" width="9" height="199.6" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.95"/>
+<rect x="854.7" y="402.8" width="9" height="166.4" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.95"/>
+<rect x="876.5" y="393.4" width="9" height="185.2" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.94"/>
+<rect x="898.4" y="396.3" width="9" height="179.5" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.94"/>
+<rect x="920.2" y="403.5" width="9" height="164.9" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.93"/>
+<rect x="942.1" y="393.2" width="9" height="185.5" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.92"/>
+<rect x="964.0" y="415.6" width="9" height="140.8" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.91"/>
+<rect x="985.8" y="394.1" width="9" height="183.7" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.90"/>
+<rect x="1007.7" y="428.5" width="9" height="115.0" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.89"/>
+<rect x="1029.5" y="399.0" width="9" height="174.0" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.88"/>
+<rect x="1051.4" y="431.0" width="9" height="110.1" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.86"/>
+<rect x="1073.3" y="407.5" width="9" height="156.9" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.85"/>
+<rect x="1095.1" y="428.5" width="9" height="115.0" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.83"/>
+<rect x="1117.0" y="419.1" width="9" height="133.9" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.81"/>
+<rect x="1138.8" y="429.9" width="9" height="112.2" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.79"/>
+<rect x="1160.7" y="432.7" width="9" height="106.6" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.77"/>
+<rect x="1182.6" y="436.0" width="9" height="99.9" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.74"/>
+<rect x="1204.4" y="447.7" width="9" height="76.7" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.71"/>
+<rect x="1226.3" y="448.1" width="9" height="75.8" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.68"/>
+<rect x="1248.1" y="463.9" width="9" height="44.2" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.63"/>
+<rect x="1270.0" y="477.0" width="9" height="18.0" rx="4.5" fill="url(#tk-bar)" fill-opacity="0.55"/>
+<text x="800" y="662" text-anchor="middle" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="16" letter-spacing="4" fill="#a8a29a" fill-opacity="0.85">LISTEN · PARSE · LOG</text>
+</svg>

@@ -1,0 +1,75 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MRNet - open-source multi-plane knee MRI autoresearch pipeline with cross-plane fusion">
+<defs>
+<radialGradient id="mr-bg" cx="50%" cy="36%" r="74%"><stop offset="0%" stop-color="#15151b"/><stop offset="100%" stop-color="#0c0c0e"/></radialGradient>
+<radialGradient id="mr-glow" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#c8a97e" stop-opacity="0.15"/><stop offset="100%" stop-color="#c8a97e" stop-opacity="0"/></radialGradient>
+<radialGradient id="mr-hub" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#d4b58c"/><stop offset="100%" stop-color="#c8a97e"/></radialGradient>
+</defs>
+<rect width="1600" height="900" fill="url(#mr-bg)"/>
+<rect width="1600" height="900" fill="url(#mr-glow)"/>
+
+<!-- three MRI planes -->
+<g>
+<rect x="150" y="250" width="400" height="120" rx="14" fill="#17171c" stroke="#f4f1ea" stroke-opacity="0.09"/>
+<text x="174" y="284" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="13" letter-spacing="2" fill="#a8a29a">SAGITTAL</text>
+<rect x="386" y="298" width="64" height="5" rx="2.5" fill="#c8a97e" fill-opacity="0.9"/>
+<rect x="386" y="310" width="64" height="5" rx="2.5" fill="#c8a97e" fill-opacity="0.7"/>
+<rect x="386" y="322" width="64" height="5" rx="2.5" fill="#c8a97e" fill-opacity="0.5"/>
+
+<rect x="150" y="390" width="400" height="120" rx="14" fill="#17171c" stroke="#f4f1ea" stroke-opacity="0.09"/>
+<text x="174" y="424" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="13" letter-spacing="2" fill="#a8a29a">CORONAL</text>
+<rect x="386" y="438" width="64" height="5" rx="2.5" fill="#c8a97e" fill-opacity="0.9"/>
+<rect x="386" y="450" width="64" height="5" rx="2.5" fill="#c8a97e" fill-opacity="0.7"/>
+<rect x="386" y="462" width="64" height="5" rx="2.5" fill="#c8a97e" fill-opacity="0.5"/>
+
+<rect x="150" y="530" width="400" height="120" rx="14" fill="#17171c" stroke="#f4f1ea" stroke-opacity="0.09"/>
+<text x="174" y="564" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="13" letter-spacing="2" fill="#a8a29a">AXIAL</text>
+<rect x="386" y="578" width="64" height="5" rx="2.5" fill="#c8a97e" fill-opacity="0.9"/>
+<rect x="386" y="590" width="64" height="5" rx="2.5" fill="#c8a97e" fill-opacity="0.7"/>
+<rect x="386" y="602" width="64" height="5" rx="2.5" fill="#c8a97e" fill-opacity="0.5"/>
+</g>
+
+<!-- planes -> fusion -->
+<g stroke="#c8a97e" stroke-opacity="0.5" stroke-width="1.4">
+<line x1="550" y1="310" x2="712" y2="430"/>
+<line x1="550" y1="450" x2="712" y2="452"/>
+<line x1="550" y1="590" x2="712" y2="474"/>
+</g>
+
+<!-- cross-plane fusion hub -->
+<circle cx="760" cy="452" r="60" fill="#c8a97e" fill-opacity="0.10"/>
+<circle cx="760" cy="452" r="40" fill="url(#mr-hub)"/>
+<text x="760" y="524" text-anchor="middle" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14" letter-spacing="2" fill="#a8a29a">FUSION</text>
+
+<!-- fusion -> autoresearch loop -->
+<line x1="800" y1="452" x2="1080" y2="452" stroke="#c8a97e" stroke-opacity="0.5" stroke-width="1.4"/>
+
+<!-- autoresearch loop -->
+<circle cx="1230" cy="452" r="150" fill="none" stroke="#c8a97e" stroke-opacity="0.40" stroke-width="1.4" stroke-dasharray="3 6"/>
+<g stroke="#a8a29a" stroke-opacity="0.10" stroke-width="1">
+<line x1="1230" y1="452" x2="1230" y2="302"/>
+<line x1="1230" y1="452" x2="1380" y2="452"/>
+<line x1="1230" y1="452" x2="1230" y2="602"/>
+<line x1="1230" y1="452" x2="1080" y2="452"/>
+</g>
+<circle cx="1230" cy="302" r="16" fill="#c8a97e" fill-opacity="0.12"/>
+<circle cx="1380" cy="452" r="16" fill="#c8a97e" fill-opacity="0.12"/>
+<circle cx="1230" cy="602" r="16" fill="#c8a97e" fill-opacity="0.12"/>
+<circle cx="1080" cy="452" r="16" fill="#c8a97e" fill-opacity="0.12"/>
+<circle cx="1230" cy="302" r="9" fill="#c8a97e" fill-opacity="0.95"/>
+<circle cx="1380" cy="452" r="9" fill="#c8a97e" fill-opacity="0.95"/>
+<circle cx="1230" cy="602" r="9" fill="#c8a97e" fill-opacity="0.95"/>
+<circle cx="1080" cy="452" r="9" fill="#c8a97e" fill-opacity="0.95"/>
+<circle cx="1230" cy="452" r="24" fill="#c8a97e" fill-opacity="0.12"/>
+<circle cx="1230" cy="452" r="14" fill="url(#mr-hub)"/>
+<polygon points="1222,294 1222,310 1238,302" fill="#c8a97e"/>
+<g font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" fill="#a8a29a" font-size="13" letter-spacing="2">
+<text x="1230" y="282" text-anchor="middle">PROPOSE</text>
+<text x="1400" y="457" text-anchor="start">RUN</text>
+<text x="1230" y="636" text-anchor="middle">EVALUATE</text>
+<text x="1060" y="457" text-anchor="end">KEEP</text>
+</g>
+<text x="1230" y="457" text-anchor="middle" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11" letter-spacing="1" fill="#14110c" font-weight="700">BEST</text>
+<text x="1230" y="702" text-anchor="middle" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="13" letter-spacing="2" fill="#a8a29a">AUTORESEARCH LOOP</text>
+
+<text x="800" y="838" text-anchor="middle" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="15" letter-spacing="3" fill="#a8a29a" fill-opacity="0.7">MULTI-PLANE KNEE MRI · EXAM-LEVEL FUSION</text>
+</svg>

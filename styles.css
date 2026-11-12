@@ -1,0 +1,1614 @@
+/* Night departure board: graphite board, split-flap charcoal, one
+   restrained signal green for live states and actions, off-white ground. */
+:root {
+  --enamel: #16191d;
+  --enamel-deep: #0f1114;
+  --enamel-ink: #f2f3f1;
+  --enamel-soft: #a9afb6;
+  --enamel-rule: rgba(242, 243, 241, 0.16);
+
+  --flap: #22262c;
+  --flap-edge: #30353d;
+  --flap-top: #262a31;
+  --flap-bottom: #1d2126;
+  --glyph: #eef0ea;
+  --glyph-soft: #a3abb6;
+
+  /* Signal green: fills and text on light ground; the bright variant is
+     for text and lamps on the graphite board. */
+  --signal: #1f7a55;
+  --signal-ink: #ffffff;
+  --signal-bright: #5cc995;
+
+  --paper: #f6f6f4;
+  --paper-raised: #ffffff;
+  /* Alternate platform bands: a quiet neutral step from the page. */
+  --band: #ecedea;
+  --ink: #15181c;
+  --ink-soft: #50565e;
+  --rule: #d4d6d2;
+  --lamp: var(--signal);
+  --focus: var(--signal);
+  --sign: var(--enamel);
+
+
+  /* The demo screens are flap panels in both themes. */
+  --stage: var(--flap);
+  --stage-ink: var(--glyph);
+  --stage-soft: var(--glyph-soft);
+  --stage-rule: rgba(238, 240, 234, 0.14);
+  --stage-lamp: var(--signal-bright);
+
+  --font-sans: "Overpass", "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-sans);
+  --font-mono: "Overpass Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.125rem;
+  --text-md: 1.3125rem;
+  --text-lg: 1.625rem;
+  --text-xl: clamp(1.75rem, 1.35rem + 1.4vw, 2.25rem);
+  --text-hero: clamp(2.75rem, 1.3rem + 4.6vw, 5.5rem);
+
+  --gutter: clamp(16px, 5vw, 64px);
+  --container: 1240px;
+  --bleed: max(var(--gutter), calc((100% - var(--container)) / 2 + var(--gutter)));
+  --header-h: 64px;
+  --section-space: clamp(5rem, 3rem + 6vw, 8.5rem);
+  /* The time column: dates, kinds and line names sit in it all the way down. */
+  --rail: 11rem;
+  --col-gap: clamp(1.5rem, 3vw, 3rem);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0f1113;
+    --paper-raised: #171a1d;
+    --band: #14171a;
+    --ink: #eceeec;
+    --ink-soft: #a3a9b0;
+    --rule: #2b3036;
+    --lamp: var(--signal-bright);
+    --focus: var(--signal-bright);
+    --sign: #2a2f36;
+  }
+
+  .film-stage,
+  .terminal-window {
+    border: 1px solid var(--flap-edge);
+  }
+
+  .stack-chips li {
+    box-shadow: inset 0 0 0 1px var(--flap-edge);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+  -webkit-text-size-adjust: 100%;
+  scrollbar-color: var(--enamel) var(--paper);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--signal-ink);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* On graphite, focus rings use the bright signal green. */
+.site-header,
+.board,
+.contact,
+.site-footer {
+  --focus: var(--signal-bright);
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--signal);
+  color: var(--signal-ink);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* ── Header: the station sign strip ─────────────────────── */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--enamel);
+  color: var(--enamel-ink);
+  transition: box-shadow 0.3s ease;
+}
+
+.site-header.is-scrolled {
+  box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.5);
+}
+
+/* Reading progress along the foot of the sign, in signal green. */
+.site-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--signal-bright);
+  transform: scaleX(var(--page-p, 0));
+  transform-origin: left;
+}
+
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: var(--header-h);
+  padding-inline: var(--bleed);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.brand-tile {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  background: var(--signal);
+  color: var(--signal-ink);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  padding-top: 2px;
+}
+
+.nav {
+  display: flex;
+  gap: clamp(16px, 2.2vw, 30px);
+}
+
+.nav a {
+  color: var(--enamel-soft);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  padding-block: 6px;
+  border-bottom: 3px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.nav a:hover {
+  color: var(--enamel-ink);
+}
+
+.nav a[aria-current="location"] {
+  color: var(--enamel-ink);
+  border-bottom-color: var(--signal-bright);
+}
+
+.nav-toggle {
+  display: none;
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--enamel-ink);
+  background: transparent;
+  border: 1.5px solid var(--enamel-rule);
+  border-radius: 4px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+/* ── Shared controls ─────────────────────────────────────── */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: 4px;
+  background: var(--signal);
+  color: var(--signal-ink);
+  font-weight: 800;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.6);
+  transition: transform 0.2s var(--ease-out), background-color 0.2s ease;
+}
+
+.button:hover {
+  background: #24905f;
+  transform: translateY(-1px);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.text-link,
+.board-link {
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.3em;
+}
+
+.board-link {
+  color: var(--enamel-ink);
+  text-decoration-color: var(--enamel-rule);
+}
+
+.board-link:hover {
+  text-decoration-color: var(--signal-bright);
+}
+
+.text-link {
+  text-decoration-color: var(--rule);
+}
+
+.text-link:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ── The departure board ──────────────────────────────────── */
+
+.board {
+  position: relative;
+  background: var(--enamel);
+  color: var(--enamel-ink);
+  padding: clamp(2rem, 5vh, 3.5rem) var(--bleed) clamp(3rem, 7vh, 5rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.board-sign {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2vw, 28px);
+}
+
+.board-portrait {
+  flex: none;
+  /* The source is 400px square, so 200px is the sharpest size on 2x screens. */
+  width: clamp(104px, 9vw + 40px, 168px);
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: 50% 25%;
+  box-shadow: 0 0 0 1px var(--enamel-rule), 0 12px 28px -14px rgba(0, 0, 0, 0.7);
+}
+
+.board-role {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--enamel-soft);
+  line-height: 1.35;
+}
+
+.board-clock {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--enamel-soft);
+}
+
+.board-time {
+  font-family: var(--font-mono);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--glyph);
+  background: var(--flap);
+  padding: 4px 10px 2px;
+  border-radius: 3px;
+  position: relative;
+  min-width: 8ch;
+  text-align: center;
+}
+
+.board-head {
+  margin-top: clamp(3rem, 9vh, 5.5rem);
+  display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  gap: var(--col-gap);
+  align-items: end;
+}
+
+.hero-title {
+  font-size: var(--text-hero);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  max-width: 13ch;
+  text-wrap: balance;
+}
+
+.hero-lede {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--enamel-soft);
+  text-wrap: pretty;
+}
+
+.board-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+}
+
+/* ── Sections: sign plate above, the time column down the left ── */
+
+.section {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--section-space) var(--gutter) 0;
+}
+
+#about,
+#work {
+  padding-bottom: var(--section-space);
+  margin-top: calc(var(--section-space) * 0.6);
+  background: var(--band);
+  /* Full-bleed band without breaking the centred container. */
+  box-shadow: 0 0 0 100vmax var(--band);
+  clip-path: inset(0 -100vmax);
+}
+
+.section-title {
+  display: inline-block;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  padding: 0.48em 0.8em 0.36em;
+  border-radius: 8px;
+  background: var(--sign);
+  /* Enamel plate: a white keyline inset from the edge. */
+  box-shadow: inset 0 0 0 4px var(--sign), inset 0 0 0 6px rgba(255, 255, 255, 0.85);
+  color: var(--enamel-ink);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.section-body {
+  padding-left: calc(var(--rail) + var(--col-gap));
+}
+
+.section-body.timeline,
+.section-body.projects {
+  padding-left: 0;
+}
+
+/* ── In practice ─────────────────────────────────────────── */
+
+.film-intro {
+  max-width: 40rem;
+  font-size: var(--text-md);
+  line-height: 1.5;
+  margin-bottom: 1.75rem;
+  text-wrap: pretty;
+}
+
+.terminal-intro {
+  margin-top: clamp(3.5rem, 6vw, 5rem);
+}
+
+/* ── About ───────────────────────────────────────────────── */
+
+.prose {
+  max-width: 40rem;
+}
+
+.prose p + p {
+  margin-top: 1.1em;
+}
+
+.prose-lead {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+.facts {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  margin-left: calc(-1 * (var(--rail) + var(--col-gap)));
+}
+
+.facts-row {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  gap: var(--col-gap);
+  padding-block: 14px;
+  border-top: 1px solid var(--rule);
+}
+
+.facts-row:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.facts dt {
+  font-weight: 700;
+  font-size: var(--text-sm);
+  padding-top: 2px;
+}
+
+.facts dd {
+  color: var(--ink-soft);
+}
+
+/* ── Experience: a route line with a stop for every role ── */
+
+.timeline {
+  position: relative;
+  --track-x: calc(var(--rail) + var(--col-gap) * 0.5);
+}
+
+.timeline-entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  gap: var(--col-gap);
+  padding-bottom: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+.timeline-date {
+  justify-self: start;
+  align-self: start;
+  background: var(--flap);
+  color: var(--glyph);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  padding: 5px 10px 3px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.timeline-body {
+  max-width: 40rem;
+}
+
+.timeline-role {
+  font-size: var(--text-lg);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.timeline-org {
+  margin-top: 4px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.timeline-body > p:not(.timeline-org):not(.timeline-outcome) {
+  margin-top: 0.9rem;
+}
+
+/* Results read in signal green. */
+.timeline-outcome {
+  margin-top: 1rem;
+  font-weight: 700;
+  font-size: var(--text-md);
+  line-height: 1.4;
+  color: var(--lamp);
+}
+
+.tags,
+.stack-chips {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tags {
+  margin-top: 1.1rem;
+  gap: 6px;
+}
+
+.tags li {
+  padding: 3px 9px 1px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.timeline::before,
+.timeline::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--track-x) - 3px);
+  top: 0.9rem;
+  bottom: 3.5rem;
+  width: 4px;
+  margin-left: 1px;
+  border-radius: 2px;
+  background: var(--rule);
+}
+
+.timeline::after {
+  background: var(--lamp);
+  transform: scaleY(var(--p, 1));
+  transform-origin: top;
+}
+
+.timeline-entry::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: calc(var(--track-x) - 9px);
+  top: 0.45rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 4px solid var(--rule);
+  background: var(--paper);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+html:not(.js) .timeline-entry::before,
+.timeline-entry.is-reached::before {
+  border-color: var(--lamp);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--lamp) 18%, transparent);
+}
+
+/* ── Work ────────────────────────────────────────────────── */
+
+.project {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr) minmax(0, 15rem);
+  grid-template-areas:
+    "kind name visual"
+    "kind desc visual"
+    "kind tags visual";
+  grid-template-rows: auto auto 1fr;
+  column-gap: var(--col-gap);
+  padding-block: clamp(2rem, 4vw, 2.75rem);
+  border-top: 1px solid var(--rule);
+}
+
+.project:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.project-visual {
+  grid-area: visual;
+  align-self: start;
+  border-radius: 6px;
+  /* Drawn in light line on a graphite panel, like the board. */
+  --ink: var(--glyph);
+  --rule: rgba(238, 240, 234, 0.22);
+  --lamp: var(--signal-bright);
+  --paper: var(--flap);
+  --paper-raised: var(--flap-top);
+  background: linear-gradient(180deg, var(--flap-top), var(--flap-bottom));
+  box-shadow: 0 2px 8px -3px rgba(0, 0, 0, 0.4);
+}
+
+.project-visual svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.project-name {
+  grid-area: name;
+  font-size: var(--text-lg);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.project-name a {
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
+}
+
+.project-name a:hover {
+  text-decoration-color: var(--lamp);
+}
+
+.project-kind {
+  grid-area: kind;
+  padding-top: 6px;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--ink-soft);
+  line-height: 1.35;
+}
+
+.project-desc {
+  grid-area: desc;
+  margin-top: 0.75rem;
+  max-width: 38rem;
+}
+
+.project .tags {
+  grid-area: tags;
+}
+
+/* ── Stack: four groups on a two-column grid; each tool is a flap tile ── */
+
+.stack {
+  margin-left: calc(-1 * (var(--rail) + var(--col-gap)));
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+}
+
+.stack-group {
+  padding-block: 1.75rem 2.25rem;
+  border-top: 1px solid var(--rule);
+}
+
+.stack-label {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 1.1rem;
+  font-weight: 800;
+  font-size: var(--text-md);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+/* A lit lamp ahead of each group name. */
+.stack-label::before {
+  content: "";
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--lamp);
+  transform: translateY(-0.08em);
+}
+
+.stack-chips {
+  gap: 8px;
+}
+
+.stack-chips li {
+  padding: 9px 14px 7px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, var(--flap-top) 0 50%, var(--flap-bottom) 50% 100%);
+  color: var(--glyph);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  line-height: 1.2;
+  white-space: nowrap;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 1px 3px -1px rgba(0, 0, 0, 0.35);
+}
+
+/* ── Contact: the last board ─────────────────────────────── */
+
+.contact {
+  position: relative;
+  margin-top: var(--section-space);
+  padding: clamp(4rem, 9vw, 7rem) var(--bleed);
+  background: var(--enamel);
+  color: var(--enamel-ink);
+}
+
+.contact-title {
+  max-width: 18ch;
+  font-size: clamp(2.25rem, 1.2rem + 3.6vw, 4.25rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.contact-links {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+}
+
+.contact-email {
+  display: inline-block;
+  background: var(--flap);
+  color: var(--glyph);
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 0.8rem + 1vw, 1.5rem);
+  padding: 12px 18px 9px;
+  border-radius: 4px;
+  text-decoration: none;
+  box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.2s ease;
+  overflow-wrap: anywhere;
+}
+
+.contact-email:hover {
+  background: var(--flap-edge);
+}
+
+.contact .text-link {
+  color: var(--enamel-ink);
+  text-decoration-color: var(--enamel-rule);
+}
+
+.contact .text-link:hover {
+  text-decoration-color: var(--signal-bright);
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding: 24px var(--bleed);
+  background: var(--enamel-deep);
+  color: var(--enamel-soft);
+  font-size: var(--text-sm);
+}
+
+.site-footer-links {
+  display: flex;
+  gap: 20px;
+}
+
+.site-footer a {
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  color: var(--enamel-ink);
+}
+
+
+/* ── Scroll-linked motion (script.js sets --p; fallbacks are finished) ── */
+
+/* Scale the whole figure so the Pause control stays on its window. */
+.film,
+.terminal {
+  transform: scale(calc(0.95 + 0.05 * var(--p, 1)));
+  transform-origin: 50% 0;
+}
+
+/* ── In practice: the looping question-to-answer film ──── */
+
+.film {
+  position: relative;
+  margin-top: 2.25rem;
+}
+
+.film-stage {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+  padding: clamp(20px, 4vw, 40px);
+  border-radius: 6px;
+  background: var(--stage);
+  color: var(--stage-ink);
+  overflow: hidden;
+}
+
+.film-ask,
+.film-panels {
+  transition: opacity 0.5s ease;
+}
+
+.film-stage.is-fading .film-ask,
+.film-stage.is-fading .film-panels {
+  opacity: 0;
+}
+
+.film-label {
+  margin-bottom: 0.6rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--stage-soft);
+}
+
+.film-question {
+  min-height: 2.5em;
+  max-width: 30ch;
+  font-size: clamp(1.35rem, 1rem + 1.3vw, 1.875rem);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.film-caret {
+  display: inline-block;
+  width: 2px;
+  height: 0.95em;
+  margin-left: 3px;
+  vertical-align: -0.1em;
+  background: var(--stage-lamp);
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+.film-steps {
+  position: relative;
+}
+
+.film-track {
+  position: absolute;
+  top: 6px;
+  left: 12.5%;
+  right: 12.5%;
+  height: 1px;
+  background: var(--stage-rule);
+}
+
+.film-track-fill {
+  height: 100%;
+  background: var(--stage-lamp);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.film-nodes {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.film-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--stage-soft);
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.film-node::before {
+  content: "";
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 1.5px solid var(--stage-soft);
+  background: var(--stage);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.film-node.is-done,
+.film-node.is-active {
+  color: var(--stage-ink);
+}
+
+.film-node.is-done::before {
+  border-color: var(--stage-ink);
+  background: var(--stage-ink);
+}
+
+.film-node.is-active::before {
+  border-color: var(--stage-lamp);
+  background: var(--stage-lamp);
+  animation: node-pulse 1.6s ease-out infinite;
+}
+
+.film-panels {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+}
+
+.film-panel {
+  min-height: 15rem;
+  padding: 18px 20px;
+  border: 1px solid var(--stage-rule);
+  border-radius: 4px;
+}
+
+.film-sql {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.75;
+  white-space: pre;
+  overflow: hidden;
+}
+
+.film-sql-line {
+  display: block;
+  min-height: 1.75em;
+}
+
+.film-kw {
+  color: var(--stage-lamp);
+}
+
+.film-bars {
+  display: grid;
+  gap: 10px;
+}
+
+.film-bar {
+  display: grid;
+  grid-template-columns: 4.75rem minmax(0, 1fr) 2.75rem;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+}
+
+.film-bar-track {
+  position: relative;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--stage-rule);
+}
+
+.film-bar-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 3px;
+  background: var(--stage-ink);
+}
+
+.film-bar.is-miss .film-bar-fill {
+  background: var(--stage-lamp);
+}
+
+.film-bar-target {
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  width: 1px;
+  background: var(--stage-soft);
+}
+
+.film-bar-value {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.film-answer {
+  min-height: 2.9em;
+  margin-top: 1rem;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.film-toggle {
+  position: absolute;
+  top: clamp(14px, 3vw, 24px);
+  right: clamp(14px, 3vw, 24px);
+  display: none;
+  min-height: 36px;
+  padding: 0 16px;
+  border: 1px solid var(--stage-soft);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--stage-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.film-toggle:hover {
+  border-color: var(--stage-ink);
+}
+
+/* The toggle only works with the script, so it only appears with it. */
+.js .film-toggle {
+  display: inline-flex;
+  align-items: center;
+}
+
+.js .film-toggle[hidden] {
+  display: none;
+}
+
+/* On the charcoal stage, focus rings use the bright signal green. */
+.film :focus-visible {
+  outline-color: var(--stage-lamp);
+}
+
+/* Without the script the stage shows its finished frame. */
+html:not(.js) .film-track-fill {
+  transform: scaleX(1);
+}
+
+html:not(.js) .film-node {
+  color: var(--stage-ink);
+}
+
+html:not(.js) .film-node::before {
+  border-color: var(--stage-ink);
+  background: var(--stage-ink);
+}
+
+html:not(.js) .film-caret {
+  display: none;
+}
+
+.film-caption {
+  margin-top: 0.8rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+}
+
+.film.is-paused .film-caret,
+.film.is-paused .film-node::before {
+  animation-play-state: paused;
+}
+
+/* ── In practice: the release session in a terminal ──── */
+
+.terminal {
+  position: relative;
+  margin-top: 2.25rem;
+}
+
+.terminal-window {
+  border-radius: 6px;
+  background: var(--stage);
+  color: var(--stage-ink);
+  overflow: hidden;
+}
+
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 clamp(16px, 3vw, 24px);
+  border-bottom: 1px solid var(--stage-rule);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--stage-soft);
+}
+
+.terminal-screen {
+  /* Room for 12 transcript lines plus the idle prompt, so nothing jumps. */
+  --term-line: 1.65;
+  height: calc(13 * var(--term-line) * 1em + 2 * clamp(16px, 3vw, 28px));
+  padding: clamp(16px, 3vw, 28px) clamp(16px, 3vw, 24px);
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* Long unbreakable lines must not widen the page grid. */
+  contain: inline-size;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: var(--term-line);
+  font-variant-numeric: tabular-nums;
+  transition: opacity 0.5s ease;
+}
+
+.terminal.is-fading .terminal-screen {
+  opacity: 0;
+}
+
+/* Pausing mid-fade keeps the transcript readable. */
+.terminal.is-paused .terminal-screen {
+  opacity: 1;
+}
+
+.terminal-line {
+  margin: 0;
+  white-space: pre;
+}
+
+.t-cmd {
+  color: var(--stage-ink);
+}
+
+.t-prompt,
+.t-ok,
+.t-bar,
+.t-spark {
+  color: var(--stage-lamp);
+}
+
+.t-dim {
+  color: var(--stage-soft);
+}
+
+/* Sparkline bars drawn in CSS: block glyphs vary too much between fonts. */
+.t-spark {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 0.12em;
+  width: 4.8em;
+  height: 1em;
+  vertical-align: -0.1em;
+}
+
+.t-spark i {
+  width: 0.45em;
+  height: calc(var(--v) * 0.28em);
+  border-radius: 1px;
+  background: currentColor;
+}
+
+.terminal-caret {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.15em;
+  margin-left: 1px;
+  vertical-align: -0.2em;
+  background: var(--stage-ink);
+  animation: caret-blink 1.05s steps(1) infinite;
+}
+
+.terminal.is-paused .terminal-caret {
+  animation-play-state: paused;
+}
+
+/* Same pill as the demo's, sitting in the title bar. */
+.terminal-toggle {
+  top: 6px;
+  right: clamp(8px, 2vw, 14px);
+}
+
+.terminal :focus-visible {
+  outline-color: var(--stage-lamp);
+}
+
+/* Project drawings: line art in ink with one accent. */
+
+.art-line {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.art-faint {
+  stroke: var(--rule);
+}
+
+.art-accent-line {
+  stroke: var(--lamp);
+}
+
+.art-fill {
+  fill: var(--ink);
+}
+
+.art-accent {
+  fill: var(--lamp);
+}
+
+.art-node,
+.art-plane {
+  fill: var(--paper-raised);
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.art-chip {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.25;
+}
+
+.art-text {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  fill: var(--ink);
+}
+
+.art-text-inverse {
+  fill: var(--paper-raised);
+}
+
+.graph-pulse {
+  fill: none;
+  stroke: var(--lamp);
+  stroke-width: 1.5;
+  opacity: 0;
+}
+
+/* ── Project drawings: slow loops that only run on screen ── */
+
+/* Each drawing builds once, in steps 0.45s apart, the first time it is seen,
+   then holds its finished state. Only small accents keep looping, so a
+   drawing is never caught empty. */
+.project-visual {
+  --step: 0.45s;
+}
+
+.s1, .s2, .s3, .s4, .s5, .s6 {
+  animation: step-in 0.7s var(--ease-out) both;
+}
+
+.s2 { animation-delay: calc(var(--step) * 1); }
+.s3 { animation-delay: calc(var(--step) * 2); }
+.s4 { animation-delay: calc(var(--step) * 3); }
+.s5 { animation-delay: calc(var(--step) * 4); }
+.s6 { animation-delay: calc(var(--step) * 5); }
+
+@keyframes step-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Trivio: the beam dips under each new left entry, levels once it's matched. */
+.ledger-beam {
+  transform-origin: 160px 88px;
+  animation: ledger-rock 3s ease-in-out both;
+}
+
+@keyframes ledger-rock {
+  0% { transform: none; }
+  9%, 14% { transform: rotate(-4deg); }
+  22%, 29% { transform: none; }
+  38%, 44% { transform: rotate(-4deg); }
+  52%, 59% { transform: none; }
+  68%, 74% { transform: rotate(-4deg); }
+  84%, 100% { transform: none; }
+}
+
+/* Graphbrain: once connected, the answer node pings every few seconds. */
+.graph-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: graph-ping 3s ease-out 1.6s infinite;
+}
+
+@keyframes graph-ping {
+  0% { opacity: 0.9; transform: scale(1); }
+  50%, 100% { opacity: 0; transform: scale(2.6); }
+}
+
+/* TrackIt: a live voice waveform. */
+.wave-bar {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wave 1.6s ease-in-out infinite;
+  animation-delay: var(--d);
+}
+
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.35); }
+  50% { transform: scaleY(1); }
+}
+
+/* MRNet: three planes converge into one exam-level prediction. */
+.mr-plane,
+.mr-fuse {
+  --loop: 7s;
+}
+
+.mr-left { animation: mr-left var(--loop) ease-in-out infinite; }
+.mr-right { animation: mr-right var(--loop) ease-in-out infinite; }
+.mr-bottom { animation: mr-bottom var(--loop) ease-in-out infinite; }
+
+.mr-fuse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mr-fuse var(--loop) ease-in-out infinite;
+}
+
+@keyframes mr-left { 0%, 10% { transform: none; opacity: 1; } 40%, 62% { transform: translate(30px, 6px); opacity: 0.35; } 90%, 100% { transform: none; opacity: 1; } }
+@keyframes mr-right { 0%, 10% { transform: none; opacity: 1; } 40%, 62% { transform: translate(-30px, 6px); opacity: 0.35; } 90%, 100% { transform: none; opacity: 1; } }
+@keyframes mr-bottom { 0%, 10% { transform: none; opacity: 1; } 40%, 62% { transform: translateY(-28px); opacity: 0.35; } 90%, 100% { transform: none; opacity: 1; } }
+@keyframes mr-fuse { 0%, 26% { opacity: 0; transform: scale(0.4); } 44%, 64% { opacity: 1; transform: none; } 86%, 100% { opacity: 0; transform: scale(0.4); } }
+
+/* Off-screen drawings hold still (script.js toggles .is-playing). Scoped to
+   .js so that without the script the drawings simply play. */
+.js .project-visual:not(.is-playing) * {
+  animation-play-state: paused;
+}
+
+/* ── Film keyframes ── */
+
+@keyframes caret-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes node-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(92, 201, 149, 0.45); }
+  100% { box-shadow: 0 0 0 10px rgba(92, 201, 149, 0); }
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+
+@media (max-width: 1100px) {
+  .board-head {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .board-pitch {
+    max-width: 36rem;
+  }
+
+  .project {
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+    grid-template-areas:
+      "kind visual"
+      "kind name"
+      "kind desc"
+      "kind tags";
+    grid-template-rows: auto;
+  }
+
+  .project-visual {
+    max-width: 22rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .nav {
+    display: none;
+    position: absolute;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px var(--gutter) 20px;
+    background: var(--enamel);
+    border-top: 1px solid var(--enamel-rule);
+    box-shadow: 0 16px 24px -12px rgba(0, 0, 0, 0.6);
+  }
+
+  .nav.is-open {
+    display: flex;
+  }
+
+  .nav a {
+    padding-block: 12px;
+    font-size: var(--text-base);
+    border-bottom: 1px solid var(--enamel-rule);
+  }
+
+  .nav a[aria-current="location"] {
+    border-bottom-color: var(--enamel-rule);
+    box-shadow: inset 0 -2px 0 var(--signal-bright);
+    padding-left: 14px;
+  }
+
+  .section-body,
+  .facts,
+  .stack {
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  .facts-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .stack {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .timeline {
+    --track-x: 9px;
+  }
+
+  .timeline-entry {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    padding-left: 36px;
+  }
+
+  .project {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "visual"
+      "name"
+      "kind"
+      "desc"
+      "tags";
+  }
+
+  .project-kind {
+    padding-top: 4px;
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 560px) {
+  /* On phones the clock drops under the portrait instead of disappearing. */
+  .board-sign {
+    flex-wrap: wrap;
+  }
+
+  .board-role {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .board-clock {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .board-head {
+    margin-top: 1.75rem;
+  }
+
+  .brand {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .film-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .film-panel {
+    min-height: 0;
+  }
+
+  .film-panel:first-child {
+    min-height: 14rem;
+  }
+
+  .film-ask .film-label {
+    display: none;
+  }
+
+  .film-stage {
+    gap: 1.25rem;
+  }
+
+  .terminal-screen {
+    font-size: 0.72rem;
+  }
+
+  .film-panel:last-child {
+    min-height: 11.5rem;
+  }
+
+  .film-question {
+    min-height: 3.75em;
+    padding-right: 4.5rem;
+  }
+
+  .film-sql {
+    font-size: 0.75rem;
+  }
+
+  .film-node {
+    font-size: 0.72rem;
+  }
+}
+
+/* ── Reduced motion: finished states, nothing loops ──────── */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .project-visual *,
+  .film-caret,
+  .film-node::before,
+  .terminal-caret {
+    animation: none !important;
+  }
+
+  .graph-pulse,
+  .film-caret {
+    display: none;
+  }
+}
+
+/* ── Print: light, static ────────────────────────────────── */
+
+@media print {
+  .site-header,
+  .film-toggle,
+  .board-clock,
+  .board-actions .button {
+    display: none !important;
+  }
+
+  .board,
+  .contact,
+  .site-footer {
+    background: none;
+    color: #000;
+    min-height: 0;
+  }
+
+  .section-title {
+    background: none;
+    color: #000;
+    padding: 0;
+  }
+}
