@@ -508,3 +508,26 @@ function runFilm(root, episodes) {
     }
   })();
 }
+
+// ── Copy chips: copy the email address in one click ──
+// Hidden in the HTML so they only appear when the script can run them.
+const copyStatus = document.querySelector("[data-copy-status]");
+for (const chip of document.querySelectorAll("[data-copy]")) {
+  if (!navigator.clipboard) continue;
+  chip.hidden = false;
+  let resetTimer = 0;
+  chip.addEventListener("click", async () => {
+    let message = "Copied";
+    try {
+      await navigator.clipboard.writeText(chip.dataset.copy);
+    } catch {
+      message = "Copy failed";
+    }
+    chip.textContent = message;
+    if (copyStatus) copyStatus.textContent = message === "Copied" ? "Email address copied" : "Could not copy the email address";
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => {
+      chip.textContent = "Copy";
+    }, 1800);
+  });
+}
